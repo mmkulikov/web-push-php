@@ -1,0 +1,25 @@
+{
+  "name": "awelty/web-push-php",
+  "description": "Send web push in php",
+  "authors": [
+    {
+      "name": "John",
+      "email": "jonathan@e-monsite.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6",
+    "lib-openssl": "*",
+    "guzzlehttp/guzzle": "^6.2",
+    "spomky-labs/base64url": "^1.0",
+    "mdanter/ecc": "^0.4.1",
+    "spomky-labs/php-aes-gcm": "^1.0",
+    "symfony/options-resolver": "^3.2",
+    "spomky-labs/jose": "^6.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Awelty\\Component\\WebPush\\": "src"
+    }
+  }
+}
