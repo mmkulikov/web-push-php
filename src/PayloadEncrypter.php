@@ -42,9 +42,9 @@ class PayloadEncrypter
      */
     private $nativePayloadEncryptionSupport;
 
-    public function __construct(GeneratorPoint $generatorPoint)
+    public function __construct()
     {
-        $this->generatorPoint = $generatorPoint;
+        $this->generatorPoint = EccFactory::getNistCurves()->generator256(); // as it is also used by VapidHeadersProvider, this could be injected as a dependency..
         $this->math = EccFactory::getAdapter();
         $this->pointSerializer = new UncompressedPointSerializer($this->math);
         $this->curve = EccFactory::getNistCurves()->curve256();

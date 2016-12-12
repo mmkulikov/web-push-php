@@ -7,6 +7,7 @@ use Awelty\Component\WebPush\Model\VAPID;
 use Base64Url\Base64Url;
 use Jose\Factory\JWKFactory;
 use Jose\Factory\JWSFactory;
+use Mdanter\Ecc\EccFactory;
 use Mdanter\Ecc\Primitives\GeneratorPoint;
 use Mdanter\Ecc\Serializer\PrivateKey\DerPrivateKeySerializer;
 use Mdanter\Ecc\Serializer\PrivateKey\PemPrivateKeySerializer;
@@ -32,10 +33,10 @@ class VapidHeadersProvider
      */
     private $pemSerializer;
 
-    public function __construct(VAPID $vapid, GeneratorPoint $generatorPoint)
+    public function __construct(VAPID $vapid)
     {
         $this->vapid = $vapid;
-        $this->generator = $generatorPoint;
+        $this->generator = EccFactory::getNistCurves()->generator256(); // as it is also used by PayloadEncrypter, this could be injected as a dependency..
         $this->pemSerializer = new PemPrivateKeySerializer(new DerPrivateKeySerializer());
     }
 
