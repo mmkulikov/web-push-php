@@ -60,7 +60,7 @@ class PushManager
 
     private function configureOptions(OptionsResolver $optionsResolver)
     {
-        $optionsResolver->setDefault('TTL', 5184000); // 60 days
+        $optionsResolver->setDefault('TTL', 2419200); // 4 weeks
         $optionsResolver->setDefined(['urgency', 'topic']);
         $optionsResolver->setAllowedValues('urgency', ['very-low', 'low', 'normal', 'high']);
         // TODO add validation for TTL & topic ?
