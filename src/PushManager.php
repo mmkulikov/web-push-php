@@ -2,6 +2,7 @@
 
 namespace Awelty\Component\WebPush;
 
+use Awelty\Component\WebPush\Model\PayloadInterface;
 use Awelty\Component\WebPush\Model\Subscription;
 use GuzzleHttp\Client;
 use GuzzleHttp\Pool;
@@ -82,6 +83,10 @@ class PushManager
      */
     public function push(Subscription $subscription, $payload = null, $headers = [])
     {
+        if ($payload instanceof PayloadInterface) {
+            $payload = $payload->getPayload();
+        }
+
         if (!is_scalar($payload)) {
             $payload = \GuzzleHttp\json_encode($payload);
         }
