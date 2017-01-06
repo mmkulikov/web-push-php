@@ -2,6 +2,7 @@
 
 namespace Awelty\Component\WebPush\Silex;
 
+use Awelty\Component\WebPush\KernelListener;
 use Awelty\Component\WebPush\Model\VAPID;
 use Awelty\Component\WebPush\PayloadEncrypter;
 use Awelty\Component\WebPush\PushManager;
@@ -9,8 +10,10 @@ use Awelty\Component\WebPush\VapidHeadersProvider;
 use Base64Url\Base64Url;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Silex\Api\EventListenerProviderInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class PushServiceProvider implements ServiceProviderInterface
+class PushServiceProvider implements ServiceProviderInterface, EventListenerProviderInterface
 {
     public function register(Container $container)
     {
@@ -45,5 +48,10 @@ class PushServiceProvider implements ServiceProviderInterface
         $container['push.payload_encrypter'] = function (Container $container) {
             return new PayloadEncrypter();
         };
+    }
+
+    public function subscribe(Container $container, EventDispatcherInterface $dispatcher)
+    {
+        $dispatcher->addListener(new KernelListener($container['push.manager']));
     }
 }
