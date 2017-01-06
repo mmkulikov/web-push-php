@@ -5,7 +5,7 @@ namespace Awelty\Component\WebPush\Model;
 /**
  * A simple notification to send as payload
  */
-class Notification extends AbstractPayload
+class Notification extends AbstractNotification
 {
     protected $title;
 
@@ -110,10 +110,5 @@ class Notification extends AbstractPayload
     {
         $this->url = $url;
         return $this;
-    }
-
-    public function getPayload()
-    {
-        return $this->getArrayPayload(['title', 'icon', 'body', 'tag', 'url']);
     }
 }
