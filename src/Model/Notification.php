@@ -17,11 +17,6 @@ class Notification extends AbstractNotification
 
     protected $url;
 
-    public function __construct($title = null)
-    {
-        $this->title = $title;
-    }
-
     /**
      * @return mixed
      */
