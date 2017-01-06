@@ -52,6 +52,6 @@ class PushServiceProvider implements ServiceProviderInterface, EventListenerProv
 
     public function subscribe(Container $container, EventDispatcherInterface $dispatcher)
     {
-        $dispatcher->addListener(new KernelListener($container['push.manager']));
+        $dispatcher->addSubscriber(new KernelListener($container['push.manager']));
     }
 }
