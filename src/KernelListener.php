@@ -26,7 +26,7 @@ class KernelListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::TERMINATE => 'onKernelTerminate',
+            KernelEvents::TERMINATE => ['onKernelTerminate', -255],
         ];
     }
 
