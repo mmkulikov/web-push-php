@@ -9,6 +9,8 @@ use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,6 +42,11 @@ class PushManager
      * @var EventDispatcherInterface | null
      */
     private $eventDispatcher;
+
+    /**
+     * @var LoggerInterface | null
+     */
+    private $logger;
 
     /**
      * Holds default options (or just default headers ?)
@@ -77,6 +84,15 @@ class PushManager
     }
 
     /**
+     * Optionnal : Active or disable log feature
+     * @param LoggerInterface|null $logger
+     */
+    public function setLogger(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
      * @param Subscription $subscription
      * @param string | array $payload datas to send
      * @param array $headers
@@ -95,7 +111,15 @@ class PushManager
 
         $request = new Request('POST', $subscription->getEndpoint(), $headers, $payload);
 
-        $request = $this->encrypter->encrypt($request, $subscription);
+        try {
+            $request = $this->encrypter->encrypt($request, $subscription);
+        } catch (\Exception $e) {
+            if ($this->logger) {
+                $this->logger->log(LogLevel::WARNING, 'Push not pushed: encryption failed', ['exception' => $e]);
+            }
+            return;
+        }
+
         $request = $this->vapidHeadersProvider->sign($request, $subscription);
         $request = $this->mergeCryptoKeyHeaders($request);
 

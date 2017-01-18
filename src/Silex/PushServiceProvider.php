@@ -27,6 +27,10 @@ class PushServiceProvider implements ServiceProviderInterface, EventListenerProv
             return isset($container['dispatcher']) ? 'dispatcher' : null;
         };
 
+        $container['push.logger'] = function (Container $container) {
+            return isset($container['logger']) ? 'logger' : null;
+        };
+
         $container['push.manager'] = function (Container $container) {
             $pushManager = new PushManager($container['push.vapid.headers_provider'], $container['push.payload_encrypter'], $container['push.default_options']);
 
@@ -34,6 +38,12 @@ class PushServiceProvider implements ServiceProviderInterface, EventListenerProv
 
             if ($dispatcherName) {
                 $pushManager->setEventDispatcher($container[$dispatcherName]);
+            }
+
+            $loggerName = $container['push.logger'];
+
+            if ($loggerName) {
+                $pushManager->setLogger($container[$loggerName]);
             }
 
             return $pushManager;
