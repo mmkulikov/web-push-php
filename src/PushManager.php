@@ -5,7 +5,7 @@ namespace Awelty\Component\WebPush;
 use Awelty\Component\WebPush\Model\PayloadInterface;
 use Awelty\Component\WebPush\Model\Subscription;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -140,7 +140,7 @@ class PushManager
                     $event = new PushEvent($response);
                     $this->eventDispatcher->dispatch(PushEvents::SUCCESS, $event);
                 },
-                'rejected' => function(BadResponseException $error, $index) {
+                'rejected' => function(RequestException $error, $index) {
                     $event = new PushEvent($error->getResponse());
                     $this->eventDispatcher->dispatch(PushEvents::FAILED, $event);
                 }
