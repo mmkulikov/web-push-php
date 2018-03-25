@@ -104,7 +104,7 @@ class PayloadEncrypter
         $tag = null;
         // "The additional data passed to each invocation of AEAD_AES_128_GCM is a zero-length octet sequence."
         if ($this->nativePayloadEncryptionSupport) {
-            $encryptedText = openssl_encrypt($payload, 'aes-128-gcm', $contentEncryptionKey, OPENSSL_RAW_DATA, $nonce); // base 64 encoded
+            $encryptedText = openssl_encrypt($payload, 'aes-128-gcm', $contentEncryptionKey, OPENSSL_RAW_DATA, $nonce, $tag); // base 64 encoded
         } else {
             list($encryptedText, $tag) = AESGCM::encrypt($contentEncryptionKey, $nonce, $payload, '');
         }
