@@ -6,7 +6,7 @@ This is a huge refactoring of @Minishlink [Web Push library](https://github.com/
 
 ## Installation
 
-```composer require awelty/web-push-php```
+```composer require mmkulikov/web-push-php```
 
 ## Create the push manager
 
