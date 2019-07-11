@@ -12,7 +12,7 @@
     "lib-openssl": "*",
     "guzzlehttp/guzzle": "^6.2",
     "spomky-labs/base64url": "^1.0",
-    "mdanter/ecc": "dev-master",
+    "mdanter/ecc": "^0.4",
     "spomky-labs/php-aes-gcm": "^1.0",
     "symfony/options-resolver": "^3.2",
     "spomky-labs/jose": "^6.1"
